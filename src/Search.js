@@ -59,7 +59,7 @@ class Search extends Component {
     };
 
     static propTypes = {
-        books: PropTypes.array.isRequired,
+        books: PropTypes.object.isRequired,
         onUpdate: PropTypes.func.isRequired
     };
 

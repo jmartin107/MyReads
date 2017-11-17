@@ -63,13 +63,15 @@ class Book extends Component {
     render() {
         const { book, onUpdate, connectDragSource } = this.props;
 
+        let imageLink = book.imageLinks ? book.imageLinks.thumbnail : 'http://via.placeholder.com/128x193?text=No%20Cover';
+
         return connectDragSource (
             <li>
                 <div className="book">
                     <div className="book-top">
                         <div className='book-cover' style={{
                             width: 128, height: 193,
-                            backgroundImage: `url(${book.imageLinks.thumbnail})`
+                            backgroundImage: `url(${imageLink})`
                         }}/>
                         <ShelfChanger
                             book={book}

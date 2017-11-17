@@ -5,7 +5,7 @@ import Search from './Search'
 import BookShelf from './BookShelf'
 import {Route} from 'react-router-dom'
 
-import { DragDropContext } from 'react-dnd';
+import {DragDropContext} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
 
@@ -50,7 +50,7 @@ class App extends Component {
         // Update the book shelf
         BooksAPI.update(book, shelf).then((result) => {
             for (let p in result) {
-                if(result.hasOwnProperty(p)) {
+                if (result.hasOwnProperty(p)) {
                     this.updateBookShelf(p, result[p], booksObject)
                 }
             }
@@ -101,7 +101,7 @@ class App extends Component {
             booksArray = [];
 
         for (p in booksObject) {
-            if(booksObject.hasOwnProperty(p)) {
+            if (booksObject.hasOwnProperty(p)) {
                 booksArray.push(booksObject[p])
             }
         }
@@ -111,6 +111,24 @@ class App extends Component {
 
 
     render() {
+        let booksByCategory = this.state.books.reduce(function (acc, book) {
+            switch (book.shelf) {
+                case 'currentlyReading':
+                    acc.currentlyReading.push(book);
+                    break;
+                case 'wantToRead':
+                    acc.wantToRead.push(book);
+                    break;
+                case 'read':
+                    acc.read.push(book);
+            }
+            return acc;
+        }, {
+            currentlyReading: [],
+            wantToRead: [],
+            read: []
+        });
+
         return <div className="App">
             <div className="list-books-title">
                 <h1>MyReads</h1>
@@ -119,20 +137,17 @@ class App extends Component {
                 <div>
                     <BookShelf
                         title="Currently Reading"
-                        books={this.state.books}
-                        category="currentlyReading"
+                        books={booksByCategory.currentlyReading}
                         onUpdate={this.updateBook}
                     />
                     <BookShelf
                         title="Want to Read"
-                        books={this.state.books}
-                        category="wantToRead"
+                        books={booksByCategory.wantToRead}
                         onUpdate={this.updateBook}
                     />
                     <BookShelf
                         title="Read"
-                        books={this.state.books}
-                        category="read"
+                        books={booksByCategory.read}
                         onUpdate={this.updateBook}
                     />
                 </div>

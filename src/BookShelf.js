@@ -26,7 +26,7 @@ const bookShelfTarget = {
  * @param monitor
  * @returns {Function}
  */
-function collect(connect, monitor) {
+function collect(connect) {
     return {
         connectDropTarget: connect.dropTarget()
     };
@@ -35,16 +35,14 @@ function collect(connect, monitor) {
 class BookShelf extends Component {
 
     static propTypes = {
-        connectDropTarget: PropTypes.func.isRequired
+        connectDropTarget: PropTypes.func.isRequired,
+        title: PropTypes.string.isRequired,
+        books: PropTypes.array.isRequired
     };
 
     render() {
 
         const {connectDropTarget} = this.props;
-
-        let filteredBooks = this.props.books.filter((book) => {
-            return book.shelf === this.props.category;
-        });
 
         return connectDropTarget(
             <div>
@@ -52,7 +50,7 @@ class BookShelf extends Component {
                     <h2 className="bookshelf-title">{this.props.title}</h2>
                     <div className="bookshelf-books">
                         <ol className="books-grid">
-                            {filteredBooks.map((book) => (
+                            {this.props.books.map((book) => (
                                 <Book
                                     key={book.id}
                                     book={book}

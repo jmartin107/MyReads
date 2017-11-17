@@ -26,8 +26,8 @@ class Search extends Component {
      * @param {String} query The value entered in the Search field.
      */
     updateQuery = (query) => {
-        this.setState({query: query.trim()});
-        this.doSearch(query.trim())
+        this.setState({query: query});
+        this.doSearch(query)
     };
 
 
@@ -43,6 +43,8 @@ class Search extends Component {
                 }
                 this.setState({searchbooks})
             })
+        } else {
+            this.setState({searchbooks: []});
         }
     }
 
